@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>EnglishLearn</title>
+
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/container.css">
+	<link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+<style>
+
+
+	.main__button:active{
+		background-color: blue;
+
+	}
+	body{
+		background-color: black;
+	}
+	.buttons_conteiner{
+		display:flex;
+		flex-direction: column;
+		gap:5px 5px;
+	}
+	.button_box{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		gap:5px;
+	}
+	.box_img{
+		width:150px;
+		height:100px;
+		border:solid 2px var(--bg2);
+		overflow: hidden;
+	}
+	.glow-on-hover {
+    width: 80px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -4px;
+    left:-4px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+@media (min-width: 500px){
+	.glow-on-hover{
+		width:240px;
+	}
+}
+nav{
+	padding:0;
+	margin:0;
+	font-size:14px;
+
+}
+
+	</style>
+
+<div class="container"  id="container">
+		<main>
+			<nav>Название темы</nav>
+			<div class=" main__button "style='background-color:#DE0E04; ' id="thema">
+				thema
+			</div>
+			<nav>глагол - сущ - прил </nav>
+			<div class=" main__button  " id="verb">
+				verb
+			</div>
+			<div class=" main__button  " id="none">
+				none
+			</div>
+			<div class=" main__button  " id="adjective">
+				adjective
+			</div>
+
+			<nav>перевод глагола</nav>
+			<div class="main__button " id="translate_verb">
+				translate_verb
+			</div>
+			<div class="main__button " id="translate_none">
+				translate_none
+			</div>
+			<div class="main__button " id="translate_adjective">
+				translate_adjective
+			</div>
+
+			<div class="main__button box_img" style="height:100px;width: 150px;" >
+				<img id="img" src="logo/logoKuhnya.jpg" alt="picture" style=	"height:100px;width: 150px; margin:0;">
+			</div>
+
+		<div class="buttons_conteiner">
+			<div class="button_box">
+				<div id="button_back" class="button_back"><button class="glow-on-hover">назад</button></div>
+				<div id="button_next" class="button_next"><button class="glow-on-hover">далее</button></div>
+			</div>
+			<div class="button_box">
+				<div id="button_shuffle" class="buttonShuffle  "><button  class="glow-on-hover">перемешать</button></div>
+				<div id="button_show" class="button_show"><button class="glow-on-hover">показать</button></div>
+			</div>
+		</div>
+
+		</div>
+
+
+		</main>
+</div>
+
+
+<script>
+
+
+
+	let arr = []; // array to SHUFFLE 
+
+//////////////////////////////////////////начало темпурной базы ///////////////////////////////
+	let array = [
+
+	{thema:'Кухня',
+	verb : 'to boil' ,					 translate_verb : 'кипятить' ,
+	none:'liquid',							 translate_none:'жидкость',
+	adjective:'iron',						 translate_adjective:'железная',
+	image : 'image/boil.jpg'},
+
+	{thema:'Кухня',
+	verb : 'to bake' ,					 translate_verb : 'выпекать ' ,
+	none:'cupcakes',						 translate_none:'кексы',
+	adjective:'fragrant',				 translate_adjective:'ароматный',
+	image : 'image/bake.jpg'},
+
+	{thema:'Кухня',
+	verb : 'to broil' ,					 translate_verb : 'жарить на гриле' ,
+	none:'roast',							 translate_none:'жаркое',
+	adjective:'juicy',					 translate_adjective:'сочный',
+	image : 'image/broil.jpg'}
+	];
+
+
+/////////////////////////////////////////////////////////конец темпурной базы///////////////////////
+
+
+		let count ;//счетчик для перебора в back and next
+	console.log(count);
+	//const name = document.querySelector('.name');
+	//const hat = document.querySelector('.hat');
+	//const spice = document.querySelector('.spice');
+
+	const thema = document.getElementById('thema');
+
+	const verb = document.getElementById('verb');
+	const none = document.getElementById('none');
+	const adjective = document.getElementById('adjective');
+
+	const translate_verb = document.getElementById('translate_verb');
+	const translate_none = document.getElementById('translate_none');
+	const translate_adjective = document.getElementById('translate_adjective');
+
+	const img = document.getElementById('img');
+
+	//click translate_verb
+		translate_verb.addEventListener('click', function(){
+
+		if(incrementCount("show")){
+				if (arr.length === 0 && count !== undefined){ //arr рандомизировано перепутанный порядок цифр равный колличеству роллов
+				translate_verb.textContent = array[count].translate_verb;
+				}else{
+				translate_verb.textContent = array[arr[count]].translate_verb;
+			}
+		}else{
+			thema.textContent='Нажми далее';
+		}
+	});
+			//click translate_none
+		translate_none.addEventListener('click', function(){
+
+		if(incrementCount("show")){
+				if (arr.length === 0 && count !== undefined){ //arr рандомизировано перепутанный порядок цифр равный колличеству роллов
+				translate_none.textContent = array[count].translate_none;
+				}else{
+				translate_none.textContent = array[arr[count]].translate_none;
+			}
+		}else{
+			thema.textContent='Нажми далее';
+		}
+	});
+	//click translate_adjective
+		translate_adjective.addEventListener('click', function(){
+
+		if(incrementCount("show")){
+				if (arr.length === 0 && count !== undefined){ //arr рандомизировано перепутанный порядок цифр равный колличеству роллов
+				translate_adjective.textContent = array[count].translate_adjective;
+				}else{
+				translate_adjective.textContent = array[arr[count]].translate_adjective;
+			}
+		}else{
+			thema.textContent='Нажми далее';
+		}
+	});
+
+
+	//click img
+		img.addEventListener('click', function(){
+		if(incrementCount("show")){
+				if (arr.length === 0 && count !== undefined){ //arr рандомизировано перепутанный порядок цифр равный колличеству роллов
+				img.src = array[count].image;
+				}else{
+				img.src = array[arr[count]].image;
+			}
+		}else{
+			thema.textContent='Нажми далее';
+		}
+	})
+
+
+	function init(){
+		console.log('init...');
+		return count === undefined? 1: 0;
+	}
+	function incrementCount(button){// обработчик событий
+		
+		if ( init() ){
+		 console.log( "count ===0 ") ; count =0;
+		}else {
+			switch(button){
+				case "next":
+				if(count+1 >= array.length){
+				count = 0;
+				}else{ count ++}
+				//return count;
+				console.log(button+' '+ count);
+				break;
+
+				case "back":
+				if(count - 1 < 0){
+				count = array.length -1;
+				}else{ count --};
+				//return count;
+				console.log(button +' '+count);
+				break;
+
+				case "show":
+				return count === undefined?folse : true;
+			}
+		}
+	}
+// button SHOW
+// button SHOW
+	// button SHOW
+	const button_show = document.getElementById('button_show');
+	button_show.addEventListener('click',function(){
+
+		if(incrementCount("show")){
+				if (arr.length === 0 && count !== undefined){ //arr рандомизировано перепутанный порядок цифр равный колличеству роллов
+
+				translate_verb.textContent = array[count].translate_verb;
+				translate_none.textContent = array[count].translate_none;
+				translate_adjective.textContent = array[count].translate_adjective;
+
+				img.src = array[count].image;
+				}else{
+
+				translate_verb.textContent = array[arr[count]].translate_verb;
+				translate_none.textContent = array[arr[count]].translate_none;
+				translate_adjective.textContent = array[arr[count]].translate_adjective;
+
+				img.src = array[arr[count]].image;
+			}
+		}else{
+			thema.textContent='Нажми далее';
+		}
+})
+
+
+	
+//button  Back
+	let button_back = document.getElementById('button_back');
+	button_back.addEventListener('click',function(){
+
+		incrementCount('back');
+		if (arr.length == 0){
+				thema.textContent = array[count].thema;
+
+				verb.textContent = array[count].verb;
+				none.textContent = array[count].none;
+				adjective.textContent = array[count].adjective;
+
+				translate_verb.textContent = "???";
+				translate_none.textContent = '???';
+				translate_adjective.textContent = '???';
+
+				img.src = 'logo/logoKuhnya.jpg';
+				}else{
+					thema.textContent = array[arr[count]].thema;
+
+					verb.textContent = array[arr[count]].verb;
+					none.textContent = array[arr[count]].none;
+					adjective.textContent = array[arr[count]].adjective;
+
+					translate_verb.textContent ='???';
+					translate_none.textContent = '???';
+					translate_adjective.textContent = '???';
+
+					img.src = 'logo/logoKuhnya.jpg';
+				}
+
+		
+	})
+
+// button NEXT
+	let button_next = document.getElementById('button_next');
+	button_next.addEventListener('click', function(){
+
+		incrementCount("next");
+		console.log('next up , count = '+count);
+
+		if ( arr.length === 0){
+				thema.textContent = array[count].thema;
+
+				verb.textContent = array[count].verb;
+				none.textContent = array[count].none;
+				adjective.textContent = array[count].adjective;
+
+				translate_verb.textContent = "???";
+				translate_none.textContent = '???';
+				translate_adjective.textContent = '???';
+
+				img.src = 'logo/logoKuhnya.jpg';
+				}else{
+					thema.textContent = array[arr[count]].thema;
+
+					verb.textContent = array[arr[count]].verb;
+					none.textContent = array[arr[count]].none;
+					adjective.textContent = array[arr[count]].adjective;
+
+					translate_verb.textContent = "???";
+					translate_none.textContent = '???';
+					translate_adjective.textContent = '???';
+
+					img.src = 'logo/logoKuhnya.jpg';
+				}
+	});
+
+console.log(arr.length + 'arr.length');
+	// SHUFFLE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	
+
+	let button_shuffle = document.getElementById('button_shuffle');
+	button_shuffle.addEventListener('click',function(){
+		count = undefined;
+	function createArr(){
+		for(i=0; i< array.length;i++){
+			arr[i]=i;
+		}
+		console.log('arrCreate!')
+	}
+
+	// shuffle arr
+
+	function putToCache(elem,cache){
+		if(cache.indexOf(elem) != -1){
+			return;
+		}
+		var i = Math.floor(Math.random()*(cache.length + 1));
+		cache.splice(i ,0, elem);
+	}
+	function madness(){
+		var cache = [];
+		return function (a,b){
+			putToCache(a , cache);
+			putToCache(b, cache);
+			return cache.indexOf(b) - cache.indexOf(a);
+		}
+	}
+	function shuffle(arr){
+		var compare = madness();
+		return arr.sort(compare);
+	}
+
+		createArr();
+		shuffle(arr);
+		console.log(arr);
+	})
+
+</script>
+</body>
+</html>

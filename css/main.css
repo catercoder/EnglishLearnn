@@ -1,0 +1,23 @@
+main{
+		display:flex;
+		flex-direction: column;
+		align-items: center;
+		width:100%;
+		gap:5px;
+	}
+	.main__button{
+		display: flex;
+		flex-direction:column;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(-68, -51, 255,0.5);
+		color:white;
+		box-shadow: inset 3px 3px 20px #E585e6,
+						inset -3px -3px 20px #E585e6;
+		backdrop-filter: blur(1px);
+		border-radius: 10px;
+		font-size: 16px;
+		width:75%;
+		height: 30px;
+
+	}
